@@ -1,0 +1,9 @@
+
+<div class="h-100 d-flex flex-column chatroom-list">
+    <ng-container *ngFor="let chatroom of chatroomService.chatrooms | async">
+      <div class="chatroom-list-item">
+        <a [routerLink]="['/chat', chatroom.id]"> <img src= "{{chatroom.logo}}" height="50px" width="50px"/>{{chatroom.name}}</a>
+        <hr>
+      </div>
+    </ng-container>
+  </div>

@@ -1,0 +1,150 @@
+
+<app-navbar></app-navbar>
+
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter this table">
+  </mat-form-field>
+  
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+  
+
+      <ng-container matColumnDef="first_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>First name</th>
+        <td mat-cell *matCellDef="let row"> {{row.first_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="last_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Last name </th>
+        <td mat-cell *matCellDef="let row"> {{row.last_name}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="height">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Height </th>
+        <td mat-cell *matCellDef="let row" > <b>{{row.height_feet}}'  {{row.height_inches}}</b> </td>
+        
+      </ng-container>
+  
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
+        <td mat-cell *matCellDef="let row"> {{row.weight_pounds}} </td>
+      </ng-container>
+  
+      <ng-container matColumnDef="position">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+        <td mat-cell *matCellDef="let row"> <b>{{row.position}}</b> </td>
+      </ng-container>
+      <ng-container matColumnDef="team">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Team </th>
+        <td mat-cell *matCellDef="let row"> <b>{{row.team}}</b> </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+        <mat-cell *matCellDef="let row"> <button mat-raised-button color="accent" (click)="displayDetails(row);detailsDisplayed=!detailsDisplayed;">STATS</button> </mat-cell>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+      </tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  </div>
+    <div *ngIf="!detailsDisplayed else showStats">Click on 'STATS' to display player's stats.</div>
+  <ng-template #showStats>
+    Player's statistic from previous games.
+        <div class="wrapper-detail" style="margin-bottom: 30px;">
+            <b><mat-icon mat-list-icon (click)="detailsDisplayed=!detailsDisplayed">close</mat-icon></b>
+            <div class="center-text">
+              <table mat-table [dataSource]="dataSource2" class="mat-elevation-z8">
+                <ng-container matColumnDef="game-date">
+                  <th mat-header-cell *matHeaderCellDef> Date </th>
+                  <td mat-cell *matCellDef="let element"> <b>{{element.date}}</b> </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="min">
+                  <th mat-header-cell *matHeaderCellDef> Min </th>
+                  <td mat-cell *matCellDef="let element"> {{element.min}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="pts">
+                  <th mat-header-cell *matHeaderCellDef> Pts </th>
+                  <td mat-cell *matCellDef="let element"> {{element.pts}} </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="ast">
+                  <th mat-header-cell *matHeaderCellDef> Ast </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ast}} </td>
+                </ng-container>
+                <ng-container matColumnDef="oreb">
+                  <th mat-header-cell *matHeaderCellDef> Off. rebs </th>
+                  <td mat-cell *matCellDef="let element"> {{element.oreb}} </td>
+                </ng-container>
+                <ng-container matColumnDef="dreb">
+                  <th mat-header-cell *matHeaderCellDef> Def. rebs </th>
+                  <td mat-cell *matCellDef="let element"> {{element.dreb}} </td>
+                </ng-container>
+                <ng-container matColumnDef="trn">
+                  <th mat-header-cell *matHeaderCellDef> Turnovers </th>
+                  <td mat-cell *matCellDef="let element"> {{element.turnover}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fg3_stat">
+                  <th mat-header-cell *matHeaderCellDef> FG3 </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fg3m}}/{{element.fg3a}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fg3_pct">
+                  <th mat-header-cell *matHeaderCellDef> FG3 (%) </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fg3_pct*100}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fg_stat">
+                  <th mat-header-cell *matHeaderCellDef> FG </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fgm}}/{{element.fga}} </td>
+                </ng-container>
+                <ng-container matColumnDef="fg_pct">
+                  <th mat-header-cell *matHeaderCellDef> FG (%) </th>
+                  <td mat-cell *matCellDef="let element"> {{element.fg_pct*100}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ft_stat">
+                  <th mat-header-cell *matHeaderCellDef> FT </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ftm}}/{{element.fta}} </td>
+                </ng-container>
+                <ng-container matColumnDef="ft_pct">
+                  <th mat-header-cell *matHeaderCellDef> FT (%) </th>
+                  <td mat-cell *matCellDef="let element"> {{element.ft_pct*100}} </td>
+                </ng-container>
+                <ng-container matColumnDef="blk">
+                  <th mat-header-cell *matHeaderCellDef> Blocks </th>
+                  <td mat-cell *matCellDef="let element"> {{element.blk}} </td>
+                </ng-container>
+                <ng-container matColumnDef="pf">
+                  <th mat-header-cell *matHeaderCellDef> Fouls </th>
+                  <td mat-cell *matCellDef="let element"> {{element.pf}} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsStats"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsStats;"></tr>
+              </table>
+            </div>
+        </div>   
+    </ng-template>
+  <!-- </div> -->
+  <form #formData="ngForm" (ngSubmit)="search(formData.value)" class="example-form">
+    <mat-card-actions *ngIf="noPlayers">
+      <mat-error>No players found by given name</mat-error>
+    </mat-card-actions>
+    
+   
+    <mat-card-actions align="start">
+      <button type="submit" [disabled]="!formData.valid" mat-raised-button color="primary">Search</button>
+      <!--<button type="button" routerLink="/shopping" mat-raised-button color="primary">Browse as Guest</button>-->
+    </mat-card-actions>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Enter player's first name or last name" name="name" #name="ngModel" ngModel required>
+    </mat-form-field> 
+  
+  </form>
+
+
+  

@@ -1,0 +1,30 @@
+
+table {
+    width: 100%;
+    
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  td, th {
+    width: 200px;
+  }
+.example-form{
+  margin-top: 35px;
+  margin-bottom: 15px;
+}
+
+/* table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+th, td {
+  overflow: hidden;
+  width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+} */
